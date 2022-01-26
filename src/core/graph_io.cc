@@ -87,6 +87,11 @@ namespace lclibrary {
 		return kSuccess;
 	}
 
+	/*! Create graph with required and non-required edges */
+	void CreateGraph(std::shared_ptr <Graph> &g, std::istream &vertex_list_infile, std::istream &req_edge_list_infile, std::istream &non_req_edge_list_infile, const bool is_with_lla, const bool is_with_cost){
+		FileParser(g, vertex_list_infile, req_edge_list_infile, non_req_edge_list_infile, is_with_lla, is_with_cost);
+	}
+
 	/*! Write graph info */
 	void WriteGraphInfo (std::shared_ptr <const Graph> G,
 			const std::string &filename) {

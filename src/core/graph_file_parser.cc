@@ -25,7 +25,7 @@
 
 namespace lclibrary {
 
-	void VertexParser (std::vector <Vertex> &vertex_list, std::ifstream &vertex_list_infile, const bool is_with_lla) {
+	void VertexParser (std::vector <Vertex> &vertex_list, std::istream &vertex_list_infile, const bool is_with_lla) {
 		size_t vertex_ID;
 		double lat, lng, alt, x, y;
 		if (is_with_lla) {
@@ -45,7 +45,7 @@ namespace lclibrary {
 		}
 	}
 
-	void FileParser (std::shared_ptr <Graph> &g, std::ifstream &vertex_list_infile, std::ifstream &edge_list_infile, const bool is_with_lla, const bool is_with_cost, bool filter_vertices) {
+	void FileParser (std::shared_ptr <Graph> &g, std::istream &vertex_list_infile, std::istream &edge_list_infile, const bool is_with_lla, const bool is_with_cost, bool filter_vertices) {
 		std::vector <Vertex> vertex_list;
 		VertexParser (vertex_list, vertex_list_infile, is_with_lla);
 		std::vector <Edge> edge_list;
@@ -70,7 +70,7 @@ namespace lclibrary {
 		g = std::make_shared <Graph>(vertex_list, edge_list, m, m_nr);
 	}
 
-	void FileParser (std::shared_ptr <Graph> &g, std::ifstream &vertex_list_infile, std::ifstream &req_edge_list_infile, std::ifstream &non_req_edge_list_infile, const bool is_with_lla, const bool is_with_cost, const bool filter_vertices) {
+	void FileParser (std::shared_ptr <Graph> &g, std::istream &vertex_list_infile, std::istream &req_edge_list_infile, std::istream &non_req_edge_list_infile, const bool is_with_lla, const bool is_with_cost, const bool filter_vertices) {
 		std::vector <Vertex> vertex_list;
 		VertexParser (vertex_list, vertex_list_infile, is_with_lla);
 		std::vector <Edge> edge_list;
@@ -79,7 +79,7 @@ namespace lclibrary {
 		g = std::make_shared <Graph>(vertex_list, edge_list, m, m_nr);
 	}
 
-	void EdgeParser (std::vector <Edge> &edge_list, std::ifstream &edge_list_infile, const bool is_with_cost, size_t &m) {
+	void EdgeParser (std::vector <Edge> &edge_list, std::istream &edge_list_infile, const bool is_with_cost, size_t &m) {
 		size_t tail_v_ID, head_v_ID;
 		if (is_with_cost) {
 			double service_cost, service_cost_rev, deadhead_cost, deadhead_cost_rev;
@@ -96,7 +96,7 @@ namespace lclibrary {
 		}
 	}
 
-	void EdgeParser (std::vector <Edge> &edge_list, std::ifstream &req_edge_list_infile, std::ifstream &non_req_edge_list_infile, const bool is_with_cost, size_t &m, size_t &m_nr) {
+	void EdgeParser (std::vector <Edge> &edge_list, std::istream &req_edge_list_infile, std::istream &non_req_edge_list_infile, const bool is_with_cost, size_t &m, size_t &m_nr) {
 		size_t tail_v_ID, head_v_ID;
 		EdgeParser (edge_list, req_edge_list_infile, is_with_cost, m);
 		if (is_with_cost) {

@@ -9,6 +9,8 @@ include(GNUInstallDirs)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+find_package(yaml-cpp PATHS $ENV{HOME}/.local REQUIRED)
+
 option(LCLIBRARY_USE_GUROBI
 	"Use GUROBI to solve LP and ILP. GUROBI needs to be configured and licensed.
 	See installation and terms of use at <https://www.gurobi.com/>"
@@ -84,7 +86,7 @@ endif()
 add_library(lclibrary ${lclibrary-type} "")
 
 target_compile_options(lclibrary PRIVATE
-	-O2 -fPIC
+	-O3 -fPIC
 	-Wall -pedantic)
 # -Wextra -Wshadow -Weffc++ -Wno-long-long
 # -pedantic -pedantic-errors)
@@ -95,6 +97,8 @@ target_include_directories(lclibrary PUBLIC
 	$<BUILD_INTERFACE:${LCLIBRARY_EXTERNAL_JSON_INCLUDE_DIR}>
 	$<BUILD_INTERFACE:${LCLIBRARY_EXTERNAL_MCPM_INCLUDE_DIR}>
 	$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+
+target_include_directories(lclibrary PRIVATE ${YAML_CPP_INCLUDE_DIR} $ENV{HOME}/.local/glpk-4.65/include $ENV{HOME}/.local/include)
 
 if(LCLIBRARY_USE_GUROBI)
 	target_include_directories(lclibrary PUBLIC
@@ -156,16 +160,6 @@ install(FILES
 export(EXPORT lclibrary-targets
 	FILE "${CMAKE_CURRENT_BINARY_DIR}/lclibrary-targets.cmake")
 
-if(LCLIBRARY_USE_GLPK)
-	add_executable(slc ${PROJECT_SOURCE_DIR}/main/slc.cc)
-	install(TARGETS slc DESTINATION ${CMAKE_INSTALL_BINDIR}/)
-	target_link_libraries(slc PUBLIC lclibrary glpk yaml-cpp)
-endif()
-
-add_executable(mlc ${PROJECT_SOURCE_DIR}/main/mlc.cc)
-install(TARGETS mlc DESTINATION ${CMAKE_INSTALL_BINDIR}/)
-target_link_libraries(mlc PUBLIC lclibrary yaml-cpp)
-
 if(LCLIBRARY_USE_LKH)
 	set(LCLIBRARY_EXTERNAL_LKH_SOURCE_DIR ${PROJECT_SOURCE_DIR}/external/lkh/)
 	set(lkh-src-pattern "${LCLIBRARY_EXTERNAL_LKH_SOURCE_DIR}/SRC/*.c")
@@ -201,4 +195,8 @@ if(LCLIBRARY_USE_GLKH)
 endif()
 
 configure_file(lclibrary_config.h.in lclibrary_config.h)
+
+add_executable(slc_demo ${PROJECT_SOURCE_DIR}/main/slc_demo.cc)
+install(TARGETS slc_demo DESTINATION ${CMAKE_INSTALL_BINDIR}/)
+target_link_libraries(slc_demo PUBLIC lclibrary yaml-cpp)
 

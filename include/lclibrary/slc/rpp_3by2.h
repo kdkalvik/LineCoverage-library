@@ -31,7 +31,6 @@
 #include <lclibrary/utils/utils.h>
 #include <lclibrary/algorithms/algorithms.h>
 #include <lclibrary/slc/slc_base.h>
-#include <lclibrary/slc/lp_glpk.h>
 #include <lclibrary/slc/cpp.h>
 
 namespace lclibrary {
@@ -144,6 +143,7 @@ namespace lclibrary {
 			sol_digraph_->ClearAllEdges();
 			std::vector <Edge> edge_list;
 			route_.GenerateEdgeList(edge_list);
+			route_.PrintRoute();
 			if(sol_digraph_->AddEdge(edge_list) == kFail)
 				return kFail;
 			return kSuccess;

@@ -50,6 +50,14 @@ namespace lclibrary {
 			const bool,
 			const bool);
 
+	/*! Create graph with required and non-required edges with stringstreams */
+	void CreateGraph(std::shared_ptr <Graph> &,
+					 std::istream &, 
+					 std::istream &, 
+					 std::istream &, 
+					 const bool, 
+					 const bool);
+	
 	void WriteGraphInfo (std::shared_ptr <const Graph> ,
 			const std::string &);
 
@@ -68,34 +76,34 @@ namespace lclibrary {
 
 	void VertexParser (
 			std::vector <Vertex> &,
-			const std::ifstream &,
+			const std::istream &,
 			const bool is_with_lla = kIsWithLLA);
 
 	void FileParser (
 			std::shared_ptr<Graph> &,
-			std::ifstream &,
-			std::ifstream &,
+			std::istream &,
+			std::istream &,
 			const bool,
 			const bool,
 			const bool filter_vertices = false);
 
 	void FileParser (
 			std::shared_ptr<Graph> &,
-			std::ifstream &,
-			std::ifstream &,
-			std::ifstream &,
+			std::istream &,
+			std::istream &,
+			std::istream &,
 			const bool,
 			const bool,
 			const bool filter_vertices = false);
 
 	void EdgeParser (
 			std::vector <Edge> &,
-			std::ifstream &, const bool, size_t &);
+			std::istream &, const bool, size_t &);
 
 	void EdgeParser (
 			std::vector <Edge> &,
-			std::ifstream &,
-			std::ifstream &,
+			std::istream &,
+			std::istream &,
 			const bool,
 			size_t &,
 			size_t &);
